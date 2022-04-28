@@ -9,18 +9,25 @@ import signal
 
 iio_path = "/sys/bus/iio/devices/iio:device%s/in_accel_%s_raw"
 tablet_threshold=200
-interval=.7
+interval=.6
 last_mode=""
 stable_reads=0
-stable_threshold=3
+stable_threshold=6
 orientation_factor=2
-orientation_threshold=200
+orientation_threshold=500
 current_mode=".unlock_normal"
 v_keyboard="3"
 v_pointer="2"
-keyboard="12"
-touchscreen="10"
-touchpad="11"
+
+kOutput = subprocess.run(['xinput', 'list', '--id-only', 'AT Translated Set 2 keyboard'], capture_output=True, text=True)
+keyboard=kOutput.stdout.strip()
+
+tsOutput = subprocess.run(['xinput', 'list', '--id-only', 'Elan Touchscreen'], capture_output=True, text=True)
+touchscreen=tsOutput.stdout.strip()
+
+tpOutput = subprocess.run(['xinput', 'list', '--id-only', 'Elan Touchpad'], capture_output=True, text=True)
+touchpad=tpOutput.stdout.strip()
+
 disp="eDP-1"
 running=True
 
